@@ -1,0 +1,20 @@
+{
+  "name": "api-findafriend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.24.3"
+   
+  },
+  "devDependencies": {
+    "@types/node": "20.10.3",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.2"
+  }
+}
