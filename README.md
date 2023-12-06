@@ -1,3 +1,5 @@
+# Fast A Friend
+
 ## RFs (Requisitos funcionais)
 
 - [ ] Deve ser possível cadastrar um pet
