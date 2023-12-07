@@ -1,15 +1,15 @@
 import { compare } from "bcryptjs";
 import { InMemoryOrganizationRepository } from "../repositories/in-memory/in-memory-organization-repository";
-import { OrganizationUseCase } from "./create-organization";
+import { CreateOrganizationUseCase } from "./create-organization";
 import { beforeEach, describe, expect, it } from "vitest";
 
 let organizationRepository: InMemoryOrganizationRepository;
-let sut: OrganizationUseCase;
+let sut: CreateOrganizationUseCase;
 
 describe("Create Organization Use Case", () => {
   beforeEach(() => {
     organizationRepository = new InMemoryOrganizationRepository();
-    sut = new OrganizationUseCase(organizationRepository);
+    sut = new CreateOrganizationUseCase(organizationRepository);
   });
 
   it("should be able to create organization", async () => {
