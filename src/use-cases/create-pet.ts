@@ -7,6 +7,7 @@ import {
   Pet,
   Size,
 } from "@prisma/client";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface CreatePetUseCaseRequest {
   state: string;
@@ -49,6 +50,12 @@ export class CreatePetUseCase {
     environment,
     organization_id,
   }: CreatePetUseCaseRequest): Promise<CreatePetUseCaseResponse> {
+    const organization = this.organizationRepository.findById(organization_id);
+
+    if (!organization) {
+      throw new ResourceNotFoundError();
+    }
+
     const pet = await this.petsRepository.create({
       state,
       city,
