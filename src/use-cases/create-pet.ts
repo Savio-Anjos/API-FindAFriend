@@ -50,11 +50,15 @@ export class CreatePetUseCase {
     environment,
     organization_id,
   }: CreatePetUseCaseRequest): Promise<CreatePetUseCaseResponse> {
-    const organization = this.organizationRepository.findById(organization_id);
+    const organization = await this.organizationRepository.findById(
+      organization_id
+    );
 
     if (!organization) {
       throw new ResourceNotFoundError();
     }
+
+    console.log(organization);
 
     const pet = await this.petsRepository.create({
       state,

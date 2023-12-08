@@ -1,4 +1,4 @@
-import { Prisma, $Enums, Pet } from "@prisma/client";
+import { Prisma, Pet } from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
 import { randomUUID } from "crypto";
 
