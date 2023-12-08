@@ -1,4 +1,4 @@
-import { Prisma, Pet } from "@prisma/client";
+import { Prisma, Pet, $Enums } from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
 import { randomUUID } from "crypto";
 
@@ -27,5 +27,11 @@ export class InMemoryPetsRepository implements PetsRepository {
     this.itens.push(pet);
 
     return pet;
+  }
+
+  public findByCity(city: string): Promise<Pet[]> {
+    const pets = this.itens.filter((item) => item.city === city);
+
+    return Promise.resolve(pets);
   }
 }
