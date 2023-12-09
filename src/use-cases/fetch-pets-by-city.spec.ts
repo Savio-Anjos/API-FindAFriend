@@ -2,6 +2,7 @@ import { InMemoryOrganizationRepository } from "../repositories/in-memory/in-mem
 import { beforeEach, describe, expect, it } from "vitest";
 import { InMemoryPetsRepository } from "../repositories/in-memory/in-memory-pets-repository";
 import { FetchPetsByCityUseCase } from "./fetch-pets-by-city";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 let petsRepository: InMemoryPetsRepository;
 let organizationRepository: InMemoryOrganizationRepository;
@@ -44,5 +45,11 @@ describe("Fetch pets by city Use Case", () => {
 
     expect(pets).toHaveLength(1);
     expect(pets).toEqual([expect.objectContaining({ name: "Bobi" })]);
+  });
+
+  it("shouldn't be able to pick up pets around the non-existent city", async () => {
+    await expect(() =>
+      sut.execute({ city: "non-existent-id" })
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
