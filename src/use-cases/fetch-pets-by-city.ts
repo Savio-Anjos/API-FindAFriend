@@ -22,8 +22,6 @@ export class FetchPetsByCityUseCase {
       throw new ResourceNotFoundError();
     }
 
-    return {
-      pets,
-    };
+    return { pets };
   }
 }

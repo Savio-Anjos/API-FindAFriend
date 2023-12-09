@@ -1,21 +1,20 @@
 import { InMemoryOrganizationRepository } from "../repositories/in-memory/in-memory-organization-repository";
 import { beforeEach, describe, expect, it } from "vitest";
-import { CreatePetUseCase } from "./create-pet";
 import { InMemoryPetsRepository } from "../repositories/in-memory/in-memory-pets-repository";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { FetchPetsByCityUseCase } from "./fetch-pets-by-city";
 
 let petsRepository: InMemoryPetsRepository;
 let organizationRepository: InMemoryOrganizationRepository;
-let sut: CreatePetUseCase;
+let sut: FetchPetsByCityUseCase;
 
-describe("Create Pet Use Case", () => {
+describe("Fetch pets by city Use Case", () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository();
     organizationRepository = new InMemoryOrganizationRepository();
-    sut = new CreatePetUseCase(petsRepository, organizationRepository);
+    sut = new FetchPetsByCityUseCase(petsRepository);
   });
 
-  it("should be able to create pet", async () => {
+  it("should be able to fetch pets by city", async () => {
     const organization = await organizationRepository.create({
       name: "Organization Test",
       email: "johndoe@example.com",
@@ -25,7 +24,7 @@ describe("Create Pet Use Case", () => {
       whatsapp: "73 99999999",
     });
 
-    const { pet } = await sut.execute({
+    await petsRepository.create({
       state: "BA",
       city: "Jaguaquara",
       neighborhood: "São Jorge",
@@ -41,26 +40,9 @@ describe("Create Pet Use Case", () => {
       organization_id: organization.id,
     });
 
-    expect(pet.id).toEqual(expect.any(String));
-  });
+    const { pets } = await sut.execute({ city: "Jaguaquara" });
 
-  it("should not be possible to register with a non-existent organization", async () => {
-    await expect(() =>
-      sut.execute({
-        state: "BA",
-        city: "Jaguaquara",
-        neighborhood: "São Jorge",
-        road: "Professora Carmem",
-        number: 122,
-        name: "Bobi",
-        description: "Bob é um...",
-        age: 3,
-        size: "AVERAGE",
-        energy_level: "HIGH",
-        independence_level: "LOW",
-        environment: "CLOSED",
-        organization_id: "non-existent id",
-      })
-    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    expect(pets).toHaveLength(1);
+    expect(pets).toEqual([expect.objectContaining({ name: "Bobi" })]);
   });
 });

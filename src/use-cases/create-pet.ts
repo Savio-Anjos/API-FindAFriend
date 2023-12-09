@@ -58,8 +58,6 @@ export class CreatePetUseCase {
       throw new ResourceNotFoundError();
     }
 
-    console.log(organization);
-
     const pet = await this.petsRepository.create({
       state,
       city,
