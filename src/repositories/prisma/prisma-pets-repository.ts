@@ -39,11 +39,11 @@ export class PrismaPetsRepository implements PetsRepository {
     const pets: Pet[] = [];
 
     filterArray.map(async (filter) => {
-      const pet = await prisma.pet.findMany({
+      const petsFiltered = await prisma.pet.findMany({
         where: filter,
       });
 
-      pets.concat(pet);
+      pets.concat(petsFiltered);
     });
 
     return pets;
