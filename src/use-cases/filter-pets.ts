@@ -1,13 +1,14 @@
 import { PetsRepository } from "@/repositories/pets-repository";
-import { Pet } from "@prisma/client";
+import { Pet, Prisma } from "@prisma/client";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { IFilterPets } from "@/interfaces/filterPets.interface";
 
 interface FilterPetsUseCaseRequest {
-  data: Pet;
+  data: IFilterPets;
 }
 
 interface FilterPetsUseCaseResponse {
-  pets: Pet[];
+  pets: Prisma.PetUpdateInput[];
 }
 
 export class FilterPetsUseCase {
