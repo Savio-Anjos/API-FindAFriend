@@ -2,7 +2,7 @@ import request from "supertest";
 import { app } from "@/app";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-describe("Create organization (e2e)", () => {
+describe("Authenticate (e2e)", () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -11,8 +11,8 @@ describe("Create organization (e2e)", () => {
     await app.close();
   });
 
-  it("should be able to create organization", async () => {
-    const response = await request(app.server).post("/organizations").send({
+  it("should be able to authenticate organization", async () => {
+    await request(app.server).post("/organizations").send({
       name: "Organization test",
       cep: "45345000",
       address: "Rua Jose...",
@@ -21,6 +21,14 @@ describe("Create organization (e2e)", () => {
       password: "123456",
     });
 
-    expect(response.statusCode).toEqual(201);
+    const response = await request(app.server).post("/sessions").send({
+      email: "jonhdoe@example.com",
+      password: "123456",
+    });
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.body).toEqual({
+      token: expect.any(String),
+    });
   });
 });
