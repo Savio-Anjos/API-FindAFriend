@@ -50,7 +50,7 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
 
   try {
     const createPetUseCase = makeCreatePetUseCase();
-    const pet = await createPetUseCase.execute({
+    await createPetUseCase.execute({
       state,
       city,
       neighborhood,
