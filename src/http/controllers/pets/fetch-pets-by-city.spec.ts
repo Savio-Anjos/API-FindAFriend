@@ -2,8 +2,9 @@ import request from "supertest";
 import { app } from "@/app";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createAndAuthenticateOrganization } from "@/utils/create-and-authenticate-organization";
+import { prisma } from "@/lib/prisma";
 
-describe("Create pet (e2e)", () => {
+describe("Fetch Pets By City (e2e)", () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -12,13 +13,13 @@ describe("Create pet (e2e)", () => {
     await app.close();
   });
 
-  it("should be able to create pet", async () => {
+  it("should be able to fetch pets by city", async () => {
     const { token, id } = await createAndAuthenticateOrganization(app);
 
-    const response = await request(app.server)
-      .post(`/pets/${id}`)
-      .set("Authorization", `Bearer ${token}`)
-      .send({
+    console.log(id);
+
+    const { city } = await prisma.pet.create({
+      data: {
         state: "BA",
         city: "Jaguaquara",
         neighborhood: "São Jorge",
@@ -31,8 +32,14 @@ describe("Create pet (e2e)", () => {
         energy_level: "HIGH",
         independence_level: "LOW",
         environment: "CLOSED",
-      });
+        organization_id: id,
+      },
+    });
 
-    expect(response.statusCode).toEqual(201);
+    const response = await request(app.server)
+      .get(`/pets/city/${city}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.statusCode).toEqual(200);
   });
 });

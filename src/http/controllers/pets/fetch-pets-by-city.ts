@@ -15,9 +15,11 @@ export async function fetchPetsByCity(
 
   try {
     const fetchPetsByCityUseCase = makeFetchPetsByCityUseCase();
-    await fetchPetsByCityUseCase.execute({
+    const pets = await fetchPetsByCityUseCase.execute({
       city,
     });
+
+    return reply.status(200).send({ pets });
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return reply.status(404).send({ message: err.message });
@@ -25,6 +27,4 @@ export async function fetchPetsByCity(
 
     throw err;
   }
-
-  return reply.status(200).send();
 }
