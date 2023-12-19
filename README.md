@@ -1,4 +1,4 @@
-# Fast A Friend
+# Find A Friend
 
 ## RFs (Requisitos funcionais)
 
