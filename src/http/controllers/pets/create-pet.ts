@@ -12,6 +12,10 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
 export async function createPet(request: FastifyRequest, reply: FastifyReply) {
+  const createPetParamsSchema = z.object({
+    organizationId: z.string(),
+  });
+
   const createPetBodySchema = z.object({
     state: z.string(),
     city: z.string(),
@@ -25,8 +29,9 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
     energy_level: z.nativeEnum(EnergyLevel),
     independence_level: z.nativeEnum(IndependenceLevel),
     environment: z.nativeEnum(Environment),
-    organization_id: z.string(),
   });
+
+  const { organizationId } = createPetParamsSchema.parse(request.params);
 
   const {
     state,
@@ -41,12 +46,11 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
     energy_level,
     independence_level,
     environment,
-    organization_id,
   } = createPetBodySchema.parse(request.body);
 
   try {
     const createPetUseCase = makeCreatePetUseCase();
-    await createPetUseCase.execute({
+    const pet = await createPetUseCase.execute({
       state,
       city,
       neighborhood,
@@ -59,7 +63,7 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
       energy_level,
       independence_level,
       environment,
-      organization_id,
+      organization_id: organizationId,
     });
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
