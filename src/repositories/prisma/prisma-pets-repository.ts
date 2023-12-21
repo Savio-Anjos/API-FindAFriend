@@ -9,17 +9,6 @@ import {
 import { PetsRepository } from "../pets-repository";
 import { prisma } from "@/lib/prisma";
 
-interface FilterParams {
-  city?: string;
-  neighborhood?: string;
-  name?: string;
-  age?: number;
-  size?: Size;
-  energyLevel?: EnergyLevel;
-  independenceLevel?: IndependenceLevel;
-  environment?: Environment;
-}
-
 export class PrismaPetsRepository implements PetsRepository {
   public async create(data: Prisma.PetUncheckedCreateInput): Promise<Pet> {
     const pet = await prisma.pet.create({

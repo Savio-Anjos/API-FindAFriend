@@ -3,12 +3,10 @@ import {
   EnergyLevel,
   Environment,
   IndependenceLevel,
-  Pet,
   Prisma,
   Size,
 } from "@prisma/client";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { IFilterPets } from "@/interfaces/filterPets.interface";
 
 interface FilterPetsUseCaseRequest {
   city?: string;
