@@ -34,13 +34,26 @@ export class PrismaPetsRepository implements PetsRepository {
   }
 
   public async filterPets(filter: string): Promise<Pet[]> {
+    const filterNumber = parseInt(filter, 10);
+
+    const filterConditions: Array<{
+      city?: { contains: string };
+      neighborhood?: { contains: string };
+      name?: { contains: string };
+      age?: { equals: number };
+    }> = [
+      { city: { contains: filter } },
+      { neighborhood: { contains: filter } },
+      { name: { contains: filter } },
+    ];
+
+    if (!isNaN(filterNumber)) {
+      filterConditions.push({ age: { equals: filterNumber } });
+    }
+
     const pets = await prisma.pet.findMany({
       where: {
-        OR: [
-          { city: { contains: filter } },
-          { neighborhood: { contains: filter } },
-          { name: { contains: filter } },
-        ],
+        OR: filterConditions,
       },
     });
 

@@ -1,11 +1,5 @@
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeFilterPetsUseCase } from "@/use-cases/factories/make-fetch-pets-use-case";
-import {
-  EnergyLevel,
-  Environment,
-  IndependenceLevel,
-  Size,
-} from "@prisma/client";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
