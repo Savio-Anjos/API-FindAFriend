@@ -1,5 +1,12 @@
 import { PetsRepository } from "@/repositories/pets-repository";
-import { Pet, Prisma } from "@prisma/client";
+import {
+  EnergyLevel,
+  Environment,
+  IndependenceLevel,
+  Pet,
+  Prisma,
+  Size,
+} from "@prisma/client";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { IFilterPets } from "@/interfaces/filterPets.interface";
 
@@ -8,6 +15,10 @@ interface FilterPetsUseCaseRequest {
   neighborhood?: string;
   name?: string;
   age?: number;
+  size?: Size;
+  energy_level?: EnergyLevel;
+  independence_level?: IndependenceLevel;
+  environment?: Environment;
 }
 
 interface FilterPetsUseCaseResponse {
@@ -22,12 +33,20 @@ export class FilterPetsUseCase {
     neighborhood,
     name,
     age,
+    size,
+    energy_level,
+    independence_level,
+    environment,
   }: FilterPetsUseCaseRequest): Promise<FilterPetsUseCaseResponse> {
     const pets = await this.petsRepository.filterPets(
       city,
       neighborhood,
       name,
-      age
+      age,
+      size,
+      energy_level,
+      independence_level,
+      environment
     );
 
     if (pets.length === 0) {

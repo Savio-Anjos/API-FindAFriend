@@ -1,4 +1,11 @@
-import { Pet, Prisma } from "@prisma/client";
+import {
+  EnergyLevel,
+  Environment,
+  IndependenceLevel,
+  Pet,
+  Prisma,
+  Size,
+} from "@prisma/client";
 
 export interface PetsRepository {
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>;
@@ -8,6 +15,10 @@ export interface PetsRepository {
     city?: string,
     neighborhood?: string,
     name?: string,
-    age?: number
+    age?: number,
+    size?: Size,
+    energyLevel?: EnergyLevel,
+    independenceLevel?: IndependenceLevel,
+    environment?: Environment
   ): Promise<Pet[]>;
 }

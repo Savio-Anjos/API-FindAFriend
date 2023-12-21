@@ -15,7 +15,7 @@ export async function fetchPetsByCity(
 
   try {
     const fetchPetsByCityUseCase = makeFetchPetsByCityUseCase();
-    const pets = await fetchPetsByCityUseCase.execute({
+    const { pets } = await fetchPetsByCityUseCase.execute({
       city,
     });
 

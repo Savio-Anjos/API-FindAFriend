@@ -1,8 +1,24 @@
-import { Prisma, $Enums, Pet } from "@prisma/client";
+import {
+  Prisma,
+  Pet,
+  Size,
+  EnergyLevel,
+  IndependenceLevel,
+  Environment,
+} from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
 import { prisma } from "@/lib/prisma";
-import { object } from "zod";
-import { IFilterPets } from "@/interfaces/filterPets.interface";
+
+interface FilterParams {
+  city?: string;
+  neighborhood?: string;
+  name?: string;
+  age?: number;
+  size?: Size;
+  energyLevel?: EnergyLevel;
+  independenceLevel?: IndependenceLevel;
+  environment?: Environment;
+}
 
 export class PrismaPetsRepository implements PetsRepository {
   public async create(data: Prisma.PetUncheckedCreateInput): Promise<Pet> {
@@ -37,30 +53,28 @@ export class PrismaPetsRepository implements PetsRepository {
     city?: string,
     neighborhood?: string,
     name?: string,
-    age?: number
+    age?: number,
+    size?: Size,
+    energyLevel?: EnergyLevel,
+    independenceLevel?: IndependenceLevel,
+    environment?: Environment
   ): Promise<Pet[]> {
-    const filterConditions: Array<{
-      city?: string;
-      neighborhood?: string;
-      name?: string;
-      age?: number;
-    }> = [];
+    const filterConditions: Record<string, unknown>[] = [];
 
-    if (city) {
-      filterConditions.push({ city: city });
-    }
+    const addCondition = (key: string, value?: unknown) => {
+      if (value) {
+        filterConditions.push({ [key]: value });
+      }
+    };
 
-    if (neighborhood) {
-      filterConditions.push({ neighborhood: neighborhood });
-    }
-
-    if (name) {
-      filterConditions.push({ name: name });
-    }
-
-    if (age) {
-      filterConditions.push({ age: age });
-    }
+    addCondition("city", city);
+    addCondition("neighborhood", neighborhood);
+    addCondition("name", name);
+    addCondition("age", age);
+    addCondition("size", size);
+    addCondition("energy_level", energyLevel);
+    addCondition("independence_level", independenceLevel);
+    addCondition("environment", environment);
 
     const pets = await prisma.pet.findMany({
       where: {
