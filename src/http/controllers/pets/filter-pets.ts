@@ -14,13 +14,7 @@ export async function filterPets(request: FastifyRequest, reply: FastifyReply) {
     filter: z.string(),
   });
 
-  console.log("Antes da validação");
-
   const { filter } = filterPetsBodySchema.parse(request.params);
-
-  console.log("Depois da validação");
-
-  console.log(filter);
 
   try {
     const filterPetsUseCase = makeFilterPetsUseCase();
