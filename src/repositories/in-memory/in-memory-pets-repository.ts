@@ -45,7 +45,9 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet;
   }
 
-  public async filterPets(filter:string): Promise<Pet[]> {
-     
+  public async filterPets(filter: string): Promise<Pet[]> {
+    const pets = this.itens.filter((item) => item.neighborhood === filter);
 
+    return pets;
+  }
 }
