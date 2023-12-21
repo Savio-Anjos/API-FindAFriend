@@ -11,67 +11,21 @@ import { z } from "zod";
 
 export async function filterPets(request: FastifyRequest, reply: FastifyReply) {
   const filterPetsBodySchema = z.object({
-    city: z.string().optional(),
-    neighborhood: z.string().optional(),
-    road: z.string().optional(),
-    number: z.number().optional(),
-    name: z.string().optional(),
-    description: z.string().optional(),
-    age: z.number().optional(),
-    size: z.nativeEnum(Size).optional(),
-    energy_level: z.nativeEnum(EnergyLevel).optional(),
-    independence_level: z.nativeEnum(IndependenceLevel).optional(),
-    environment: z.nativeEnum(Environment).optional(),
+    filter: z.string(),
   });
 
   console.log("Antes da validação");
 
-  const {
-    city,
-    neighborhood,
-    road,
-    number,
-    name,
-    description,
-    age,
-    size,
-    energy_level,
-    independence_level,
-    environment,
-  } = filterPetsBodySchema.parse(request.body);
+  const { filter } = filterPetsBodySchema.parse(request.params);
 
   console.log("Depois da validação");
 
-  console.log(
-    city,
-    neighborhood,
-    road,
-    number,
-    name,
-    description,
-    age,
-    size,
-    energy_level,
-    independence_level,
-    environment
-  );
+  console.log(filter);
 
   try {
     const filterPetsUseCase = makeFilterPetsUseCase();
     const pets = await filterPetsUseCase.execute({
-      data: {
-        city,
-        neighborhood,
-        road,
-        number,
-        name,
-        description,
-        age,
-        size,
-        energy_level,
-        independence_level,
-        environment,
-      },
+      filter,
     });
 
     return reply.status(200).send({ pets });

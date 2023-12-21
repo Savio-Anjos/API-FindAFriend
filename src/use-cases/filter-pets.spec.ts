@@ -57,6 +57,7 @@ describe("Filter pets Use Case", () => {
       environment: "CLOSED",
       organization_id: organization.id,
     });
+    ("");
 
     const { pets } = await sut.execute({ filter: "São Jorge" });
 
