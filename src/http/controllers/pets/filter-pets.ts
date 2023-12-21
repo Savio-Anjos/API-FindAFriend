@@ -5,15 +5,29 @@ import { z } from "zod";
 
 export async function filterPets(request: FastifyRequest, reply: FastifyReply) {
   const filterPetsBodySchema = z.object({
-    filter: z.string(),
+    city: z.string().optional(),
+    neighborhood: z.string().optional(),
+    name: z.string().optional(),
+    age: z.string().optional(),
   });
 
-  const { filter } = filterPetsBodySchema.parse(request.params);
+  const { city, neighborhood, name, age } = filterPetsBodySchema.parse(
+    request.query
+  );
+
+  let ageConverted;
+
+  if (age) {
+    ageConverted = parseInt(age);
+  }
 
   try {
     const filterPetsUseCase = makeFilterPetsUseCase();
     const pets = await filterPetsUseCase.execute({
-      filter,
+      city,
+      neighborhood,
+      name,
+      age: ageConverted,
     });
 
     return reply.status(200).send({ pets });

@@ -35,9 +35,9 @@ describe("Filter pets (e2e)", () => {
     });
 
     const response = await request(app.server)
-      .get("/pets/filter/Bobi")
+      .get("/pets/filter")
       .set("Authorization", `Bearer ${token}`)
-      .send({
+      .query({
         name: "Bobi",
       });
 

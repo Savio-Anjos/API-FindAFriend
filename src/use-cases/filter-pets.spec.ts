@@ -59,7 +59,7 @@ describe("Filter pets Use Case", () => {
     });
     ("");
 
-    const { pets } = await sut.execute({ filter: "São Jorge" });
+    const { pets } = await sut.execute({ name: "Bobi", city: "Jaguaquara" });
 
     expect(pets).toHaveLength(2);
     expect(pets).toEqual([
@@ -95,13 +95,13 @@ describe("Filter pets Use Case", () => {
     });
 
     await expect(() =>
-      sut.execute({ filter: "non-existent filter" })
+      sut.execute({ name: "non-existent filter" })
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 
   it("should not be able to filter pets with non-existent data", async () => {
     await expect(() =>
-      sut.execute({ filter: "non-existent filter" })
+      sut.execute({ name: "non-existent filter" })
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
