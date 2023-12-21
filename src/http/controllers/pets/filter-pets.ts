@@ -1,7 +1,4 @@
-import { OrganizationAlreadyExistsError } from "@/use-cases/errors/organization-already-exists-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
-import { makeCreateOrganizationUseCase } from "@/use-cases/factories/make-create-organization-use-case";
-import { makeCreatePetUseCase } from "@/use-cases/factories/make-create-pet-use-case";
 import { makeFilterPetsUseCase } from "@/use-cases/factories/make-fetch-pets-use-case";
 import {
   EnergyLevel,
@@ -14,7 +11,6 @@ import { z } from "zod";
 
 export async function filterPets(request: FastifyRequest, reply: FastifyReply) {
   const filterPetsBodySchema = z.object({
-    state: z.string().optional(),
     city: z.string().optional(),
     neighborhood: z.string().optional(),
     road: z.string().optional(),
@@ -28,12 +24,54 @@ export async function filterPets(request: FastifyRequest, reply: FastifyReply) {
     environment: z.nativeEnum(Environment).optional(),
   });
 
-  const data = filterPetsBodySchema.parse(request.body);
+  console.log("Antes da validação");
+
+  const {
+    city,
+    neighborhood,
+    road,
+    number,
+    name,
+    description,
+    age,
+    size,
+    energy_level,
+    independence_level,
+    environment,
+  } = filterPetsBodySchema.parse(request.body);
+
+  console.log("Depois da validação");
+
+  console.log(
+    city,
+    neighborhood,
+    road,
+    number,
+    name,
+    description,
+    age,
+    size,
+    energy_level,
+    independence_level,
+    environment
+  );
 
   try {
     const filterPetsUseCase = makeFilterPetsUseCase();
     const pets = await filterPetsUseCase.execute({
-      data,
+      data: {
+        city,
+        neighborhood,
+        road,
+        number,
+        name,
+        description,
+        age,
+        size,
+        energy_level,
+        independence_level,
+        environment,
+      },
     });
 
     return reply.status(200).send({ pets });

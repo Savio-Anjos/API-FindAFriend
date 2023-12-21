@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createAndAuthenticateOrganization } from "@/utils/create-and-authenticate-organization";
 import { prisma } from "@/lib/prisma";
 
-describe("Fetch Pets By City (e2e)", () => {
+describe("Filter pets (e2e)", () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -13,10 +13,10 @@ describe("Fetch Pets By City (e2e)", () => {
     await app.close();
   });
 
-  it("should be able to fetch pets by city", async () => {
+  it("should be able to filter pets", async () => {
     const { token, id } = await createAndAuthenticateOrganization(app);
 
-    const { city } = await prisma.pet.create({
+    await prisma.pet.create({
       data: {
         state: "BA",
         city: "Jaguaquara",
@@ -35,8 +35,11 @@ describe("Fetch Pets By City (e2e)", () => {
     });
 
     const response = await request(app.server)
-      .get(`/pets/city/${city}`)
-      .set("Authorization", `Bearer ${token}`);
+      .get("/pets/filter")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Bobi",
+      });
 
     expect(response.statusCode).toEqual(200);
   });

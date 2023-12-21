@@ -45,28 +45,7 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet;
   }
 
-  public async filterPets(data: Prisma.PetUpdateInput): Promise<Pet[]> {
-    const filteredPets: Pet[] = this.itens.filter((pet) => {
-      for (const key of Object.keys(data)) {
-        const fieldValue = pet[key as keyof Pet];
-        const filterValue = data[key as keyof Prisma.PetUpdateInput];
+  public async filterPets(filter:string): Promise<Pet[]> {
+     
 
-        if (filterValue !== undefined) {
-          if (
-            typeof fieldValue === "string" &&
-            fieldValue
-              .toLowerCase()
-              .includes(filterValue.toString().toLowerCase())
-          ) {
-            return true;
-          } else if (fieldValue === filterValue) {
-            return true;
-          }
-        }
-      }
-      return false;
-    });
-
-    return filteredPets;
-  }
 }

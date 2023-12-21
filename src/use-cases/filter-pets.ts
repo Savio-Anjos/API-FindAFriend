@@ -4,7 +4,7 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { IFilterPets } from "@/interfaces/filterPets.interface";
 
 interface FilterPetsUseCaseRequest {
-  data: IFilterPets;
+  filter: string;
 }
 
 interface FilterPetsUseCaseResponse {
@@ -15,9 +15,9 @@ export class FilterPetsUseCase {
   constructor(private petsRepository: PetsRepository) {}
 
   async execute({
-    data,
+    filter,
   }: FilterPetsUseCaseRequest): Promise<FilterPetsUseCaseResponse> {
-    const pets = await this.petsRepository.filterPets(data);
+    const pets = await this.petsRepository.filterPets(filter);
 
     if (pets.length === 0) {
       throw new ResourceNotFoundError();

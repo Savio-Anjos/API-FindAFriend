@@ -11,5 +11,4 @@ export interface IFilterPets {
   energy_level?: $Enums.EnergyLevel;
   independence_level?: $Enums.IndependenceLevel;
   environment?: $Enums.Environment;
-  created_at?: Date | string;
 }

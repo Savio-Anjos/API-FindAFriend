@@ -33,17 +33,15 @@ export class PrismaPetsRepository implements PetsRepository {
     return pet;
   }
 
-  public async filterPets(data: IFilterPets): Promise<Pet[]> {
-    const filterArray = Object.values(data);
-
-    const pets: Pet[] = [];
-
-    filterArray.map(async (filter) => {
-      const petsFiltered = await prisma.pet.findMany({
-        where: filter,
-      });
-
-      pets.concat(petsFiltered);
+  public async filterPets(filter: string): Promise<Pet[]> {
+    const pets = await prisma.pet.findMany({
+      where: {
+        OR: [
+          { city: { contains: filter } },
+          { neighborhood: { contains: filter } },
+          { name: { contains: filter } },
+        ],
+      },
     });
 
     return pets;
