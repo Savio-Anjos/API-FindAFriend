@@ -5,6 +5,7 @@ import { organizationRoutes } from "./http/controllers/organizations/routes";
 import fastifyJwt from "@fastify/jwt";
 import { petsRoutes } from "./http/controllers/pets/routes";
 import fastifyCookie from "@fastify/cookie";
+import { userRoutes } from "./http/controllers/users/routes";
 
 export const app = fastify();
 
@@ -14,6 +15,7 @@ app.register(fastifyJwt, {
 
 app.register(fastifyCookie);
 
+app.register(userRoutes);
 app.register(organizationRoutes);
 app.register(petsRoutes);
 
