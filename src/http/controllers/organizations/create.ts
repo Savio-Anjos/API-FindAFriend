@@ -10,7 +10,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     cep: z.string(),
     address: z.string(),
     whatsapp: z.string(),
-    password: z.string(),
+    password: z.string().min(6),
   });
 
   const { name, email, cep, address, whatsapp, password } =
