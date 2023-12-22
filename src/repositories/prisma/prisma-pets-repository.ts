@@ -5,6 +5,7 @@ import {
   EnergyLevel,
   IndependenceLevel,
   Environment,
+  $Enums,
 } from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
 import { prisma } from "@/lib/prisma";
@@ -30,6 +31,16 @@ export class PrismaPetsRepository implements PetsRepository {
 
   public async getPetDetails(id: string): Promise<Pet | null> {
     const pet = await prisma.pet.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return pet;
+  }
+
+  public async delete(id: string): Promise<Pet | null> {
+    const pet = prisma.pet.delete({
       where: {
         id,
       },

@@ -45,6 +45,14 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet;
   }
 
+  public async delete(id: string): Promise<Pet | null> {
+    const pet = this.itens.find((item) => item.id === id);
+
+    if (!pet) return null;
+
+    return pet;
+  }
+
   public async filterPets(
     city?: string,
     neighborhood?: string,
