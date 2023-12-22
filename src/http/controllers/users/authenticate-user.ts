@@ -21,7 +21,7 @@ export async function authenticateUser(
 
     const { user } = await authenticateUserUseCase.execute({ email, password });
 
-    const token = reply.jwtSign({}, { sign: { sub: user.id } });
+    const token = await reply.jwtSign({}, { sign: { sub: user.id } });
 
     return reply.status(200).send({
       token,
