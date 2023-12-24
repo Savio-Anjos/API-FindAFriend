@@ -22,7 +22,7 @@ describe("Authenticate (e2e)", () => {
     });
 
     const response = await request(app.server)
-      .post("/authenticate/sessions")
+      .post("/organizations/sessions")
       .send({
         email: "jonhdoe@example.com",
         password: "123456",
