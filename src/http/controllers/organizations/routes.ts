@@ -4,5 +4,5 @@ import { authenticate } from "./authenticate";
 
 export async function organizationRoutes(app: FastifyInstance) {
   app.post("/organizations", create);
-  app.post("/sessions", authenticate);
+  app.post("/organizations/sessions", authenticate);
 }

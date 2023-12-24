@@ -21,10 +21,12 @@ describe("Authenticate (e2e)", () => {
       password: "123456",
     });
 
-    const response = await request(app.server).post("/sessions").send({
-      email: "jonhdoe@example.com",
-      password: "123456",
-    });
+    const response = await request(app.server)
+      .post("/authenticate/sessions")
+      .send({
+        email: "jonhdoe@example.com",
+        password: "123456",
+      });
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toEqual({

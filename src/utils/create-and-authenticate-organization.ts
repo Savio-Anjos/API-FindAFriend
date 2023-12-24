@@ -15,10 +15,12 @@ export async function createAndAuthenticateOrganization(app: FastifyInstance) {
     },
   });
 
-  const authResponse = await request(app.server).post("/sessions").send({
-    email: "jonhdoe@example.com",
-    password: "123456",
-  });
+  const authResponse = await request(app.server)
+    .post("/organizations/sessions")
+    .send({
+      email: "jonhdoe@example.com",
+      password: "123456",
+    });
 
   const { token } = authResponse.body;
 
