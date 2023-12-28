@@ -15,12 +15,13 @@ Esse projeto está utilizando as seguintes tecnologias:
 - [Fastify](https://fastify.dev/)
 - [Vitest](https://vitest.dev/)
 - [Docker](https://www.docker.com/)
+- [Prisma](https://www.prisma.io//)
 
 ## 📜 Descrição
 
 Esse projeto consiste em uma API para uma aplicação de adoção de animais,
 nele foi utilizado padrões de arquitetura de software e foram desenvolvidos
-testes unitários e E2E. Para garantir a qualidade fooi configurado o ambiente
+testes unitários e E2E. Para garantir a qualidade foi configurado o ambiente
 CI com github actions.
 
 ## ⚙️ Como funciona?
