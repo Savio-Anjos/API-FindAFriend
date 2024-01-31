@@ -46,6 +46,28 @@ CI com github actions.
 - [x] Um pet deve estar ligado a uma ORG
 - [x] Todos os filtros, além da cidade, são opcionais
 
+## Rotas da aplicação
+
+A seguir estão as principais rotas da aplicação:
+
+### Usuários
+
+- **POST** `/users`: Cria um novo usuário.
+- **POST** `/users/sessions`: Autentica um usuário.
+
+### Organizações
+
+- **POST** `/organizations`: Cria uma nova organização.
+- **POST** `/organizations/sessions`: Autentica uma organização.
+
+### Pets
+
+- **POST** `/pets/:organizationId`: Cria um novo pet para uma organização específica.
+- **DELETE** `/pets/:id`: Deleta um pet.
+- **GET** `/pets/city/:city`: Lista todos os pets em uma determinada cidade.
+- **GET** `/pets/filter`: Filtra pets com base em critérios específicos.
+- **GET** `/pets/details/:id`: Obtém detalhes de um pet específico.
+
 ## 🎲 Quer customizar o projeto?
 
 ### Clone esse repositório
